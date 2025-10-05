@@ -1,12 +1,12 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from .. import models, schemas
-from ..hashing import hash_password
+from ..hashing import Hashing
 
 
 def create(request: schemas.User, db: Session):
-    new_user = models.User(username=request.username, email=request.email, password=hash_password(request.password))
-    
+    new_user = models.User(username=request.username, email=request.email, password=Hashing.hash_password(request.password))
+
     if not request.username:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Username is required")
     if not request.email:

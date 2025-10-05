@@ -1,0 +1,20 @@
+from fastapi import APIRouter, Depends, HTTPException, status
+from .. import schemas, database, models
+from ..hashing import Hashing
+from sqlalchemy.orm import Session
+
+get_db = database.get_db
+
+router = APIRouter(
+    prefix="/auth",
+    tags=["Authentication"]
+)
+
+@router.post('/login')
+def login(request:schemas.Login, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.email == request.username).first()
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid username")
+    if not Hashing.verify_password(request.password, user.password):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid password")
+    return {"message": "Login successful"}
