@@ -18,11 +18,18 @@ class ShowUser(BaseModel):
     class Config():
         orm_mode = True
 
+class ShowUserInBlog(BaseModel):
+    username: str
+    email: EmailStr
+
+    class Config():
+        orm_mode = True
+
 class ShowBlog(Blog):
     id: int
     title: str
     content: str
-    creator: ShowUser
+    creator: ShowUserInBlog
 
     class Config():
         orm_mode = True
