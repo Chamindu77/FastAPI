@@ -1,4 +1,4 @@
-# FastAPI
+# FastAPI for backend development practice.
 
 A complete CRUD API for managing blogs with user authentication, created by following the Bitfumes FastAPI course. This project includes FastAPI, SQLAlchemy, Pydantic, JWT authentication, and Swagger documentation.
 
